@@ -3,21 +3,13 @@ import pandas as pd
 import joblib
 import os
 
-
-# =========================================================
-# PAGE CONFIG
-# =========================================================
-
 st.set_page_config(
     page_title="Mental Health Prediction",
     page_icon="🧠",
     layout="centered"
 )
 
-
-# =========================================================
 # LOAD MODEL
-# =========================================================
 
 MODEL_FILE = "Mental_Health_Model.pkl"
 
@@ -34,10 +26,7 @@ except Exception as e:
     st.error(f"Error loading model: {e}")
     st.stop()
 
-
-# =========================================================
 # COUNTRY GROUPING
-# =========================================================
 
 top_countries = [
     "Other",
@@ -52,18 +41,12 @@ top_countries = [
     "France"
 ]
 
-
-# =========================================================
 # TITLE
-# =========================================================
 
 st.title("🧠 Mental Health Prediction")
 st.write("Enter student information to predict the mental health score.")
 
-
-# =========================================================
 # INPUT SECTION
-# =========================================================
 
 st.subheader("Student Information")
 
@@ -179,31 +162,21 @@ with col2:
         ]
     )
 
-
-# =========================================================
 # PREDICTION BUTTON
-# =========================================================
 
 if st.button(
     "🔮 Predict Mental Health Score",
     use_container_width=True
 ):
 
-    # -----------------------------------------------------
     # GROUP COUNTRY
-    # -----------------------------------------------------
 
     if country in top_countries:
         grouped_country = country
     else:
         grouped_country = "Other"
 
-
-    # -----------------------------------------------------
     # CREATE INPUT DATAFRAME
-    # IMPORTANT:
-    # These column names MUST match the trained model.
-    # -----------------------------------------------------
 
     input_data = pd.DataFrame([{
 
@@ -233,10 +206,7 @@ if st.button(
 
     }])
 
-
-    # -----------------------------------------------------
     # PREDICTION
-    # -----------------------------------------------------
 
     try:
 
@@ -247,11 +217,8 @@ if st.button(
         # Keep score inside expected range if necessary
         score = max(0, min(10, score))
 
-
-        # -------------------------------------------------
         # RESULT
-        # -------------------------------------------------
-
+       
         st.success("Prediction completed successfully!")
 
         st.metric(
@@ -259,10 +226,7 @@ if st.button(
             value=f"{score:.2f}"
         )
 
-
-        # -------------------------------------------------
         # INTERPRETATION
-        # -------------------------------------------------
 
         if score < 4:
 
@@ -282,11 +246,8 @@ if st.button(
                 "The predicted score is relatively high."
             )
 
-
-        # -------------------------------------------------
         # DEBUG INFORMATION
-        # -------------------------------------------------
-
+    
         with st.expander("View Input Data"):
 
             st.dataframe(
